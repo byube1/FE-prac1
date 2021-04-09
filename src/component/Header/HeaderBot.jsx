@@ -37,7 +37,7 @@ export default function HeaderBot() {
 
                         <Link className={classes.tagAUserInfor} to="/manageProduct">
                             <li className={classes.listMenu} >
-                                PRODUCT
+                                MANAGE PRODUCT
                             </li>
                         </Link>
 

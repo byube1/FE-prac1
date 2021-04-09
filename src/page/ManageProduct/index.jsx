@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 
 import { Link } from 'react-router-dom';
 
@@ -51,41 +52,46 @@ export default function CustomizedTables() {
     const classes = useStyles();
 
     return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Name</StyledTableCell>
-                        <StyledTableCell >Catelogy</StyledTableCell>
-                        <StyledTableCell >Date create</StyledTableCell>
-                        <StyledTableCell >Price</StyledTableCell>
-                        <StyledTableCell >IMG</StyledTableCell>
-                        <StyledTableCell >Option</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                                {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell >{row.calories}</StyledTableCell>
-                            <StyledTableCell >{row.fat}</StyledTableCell>
-                            <StyledTableCell >{row.carbs}</StyledTableCell>
-                            <StyledTableCell >{row.fat}</StyledTableCell>
-                            <StyledTableCell >
-                                <Link to="/editProduct">
-                                    <Button className={classes.customTaga}> Edit</Button>
-                                </Link>
-                                <Link to="/listProduct">
-                                    <Button className={classes.customTaga}> Delete</Button>
-                                </Link>
-                            </StyledTableCell>
+        <Container>
 
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+
+
+            <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Name</StyledTableCell>
+                            <StyledTableCell >Catelogy</StyledTableCell>
+                            <StyledTableCell >Date create</StyledTableCell>
+                            <StyledTableCell >Price</StyledTableCell>
+                            <StyledTableCell >IMG</StyledTableCell>
+                            <StyledTableCell >Option</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <StyledTableRow key={row.name}>
+                                <StyledTableCell component="th" scope="row">
+                                    {row.name}
+                                </StyledTableCell>
+                                <StyledTableCell >{row.calories}</StyledTableCell>
+                                <StyledTableCell >{row.fat}</StyledTableCell>
+                                <StyledTableCell >{row.carbs}</StyledTableCell>
+                                <StyledTableCell >{row.fat}</StyledTableCell>
+                                <StyledTableCell >
+                                    <Link to="/editProduct">
+                                        <Button className={classes.customTaga}> Edit</Button>
+                                    </Link>
+                                    <Link to="/listProduct">
+                                        <Button className={classes.customTaga}> Delete</Button>
+                                    </Link>
+                                </StyledTableCell>
+
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Container>
     );
 }
