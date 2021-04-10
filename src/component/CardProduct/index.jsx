@@ -12,16 +12,16 @@ export default function CardProduct() {
     return (
         <div className={classes.card} ref={hoverRef}>
             <div className={classes.imgProductBox} >
-                <a href="">
+                <a href="/#">
                     <img className={classes.imgProduct} src="//cdn.shopify.com/s/files/1/0248/5823/0872/products/9_2fb7cc1d-cf28-45a9-bc65-8629d22593b7_large.jpg?v=1571546896" alt="" />
                 </a>
                 <div className={classes.buttomGroup}>
-                    <a href="">
+                    <a href="/#">
                         <div className={isHovered ? classes.iconBox : classes.hiddenIconBox}>
                             <FavoriteBorderIcon />
                         </div>
                     </a>
-                    <a href="">
+                    <a href="/#">
                         <div className={isHovered ? classes.iconBox : classes.hiddenIconBox}>
                             <VisibilityOutlinedIcon />
                         </div>
@@ -39,12 +39,12 @@ export default function CardProduct() {
 
                     <Grid container>
                         <Grid item xs={9}>
-                            <h6 className={classes.titleProduct} > <a className={classes.cusTaga} href="">Quickiin Mens shoes</a> </h6>
+                            <h6 className={classes.titleProduct} > <a className={classes.cusTaga} href="/#">Quickiin Mens shoes</a> </h6>
                             <p className={classes.price}>$999 </p>
                         </Grid>
                         <Grid item xs={3}>
                             <div className={classes.addToCartBox}>
-                                <a href="">
+                                <a href="/#">
                                     <div className={classes.addToCart}>
                                         <AddShoppingCartIcon />
                                     </div>
