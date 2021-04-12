@@ -6,9 +6,10 @@ import { fetchProduct } from "../../redux/action/productAction";
 
 export default function Home() {
     const dispatch = useDispatch();
-    useEffect(() => {
+    React.useEffect(() => {
         dispatch(fetchProduct());
     });
+
     return (
         <div>
             <h1>Home</h1>

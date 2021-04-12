@@ -2,8 +2,14 @@ import React from 'react'
 import CardProduct from '../CardProduct'
 import Grid from '@material-ui/core/Grid';
 import style from './ctnproduct.module.css';
+import { useSelector } from "react-redux";
 
 export default function ContainerProduct() {
+    const listProduct = useSelector((state => state.productReducer.productList))
+    const renderProduct = () => listProduct.map((product, index) => (
+    <Grid item xs={4}  key={index}>
+        <CardProduct product={product} />
+    </Grid>))
     return (
         <div>
             <Grid container>
@@ -13,29 +19,9 @@ export default function ContainerProduct() {
 
                 <Grid item xs={10}>
                     <Grid container spacing={3}>
-
-                        <Grid item xs={4}>
-                            <CardProduct />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <CardProduct />
-
-                        </Grid>
-                        <Grid item xs={4}>
-                            <CardProduct />
-
-                        </Grid>
-                        <Grid item xs={4}>
-                            <CardProduct />
-
-                        </Grid>
+                      {renderProduct()}
                     </Grid>
-
-
-
                 </Grid>
-
-
             </Grid>
 
         </div>

@@ -1,1 +1,5 @@
-export const SET_PRODUCT = "SET_PRODUCT";
+
+export const ACTION = {
+    SET_PRODUCT: "SET_PRODUCT",
+    CREATE_PRODUCT: "CREATE_PRODUCT"
+};

@@ -9,9 +9,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-
+import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
-
+import { useDispatch } from "react-redux";
+import { fetchProduct } from "../../redux/action/productAction";
 const StyledTableCell = withStyles((theme) => ({
     head: {
         backgroundColor: theme.palette.common.black,
@@ -30,29 +31,44 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
+    imgCover: {
+        width: "20%"
+    },
+    cusImg: {
+        width: "100%"
+    },
+    addpd: {
+        display: "flex",
+        justifyContent: "flex-start",
+        margin: "20px 0"
+    }
 });
 
 export default function CustomizedTables() {
+    const dispatch = useDispatch();
+    React.useEffect(() => {
+        dispatch(fetchProduct());
+    });
     const classes = useStyles();
+    const rows = useSelector((state => state.productReducer.productList))
+
 
     return (
+
         <Container>
+
+            <div className={classes.addpd}>
+                <Link to="/addProduct">
+                    <Button className={classes.customTaga} variant="contained" color="primary"> Add new product</Button>
+                </Link>
+
+            </div>
+
 
 
 
@@ -74,12 +90,16 @@ export default function CustomizedTables() {
                                 <StyledTableCell component="th" scope="row">
                                     {row.name}
                                 </StyledTableCell>
-                                <StyledTableCell >{row.calories}</StyledTableCell>
-                                <StyledTableCell >{row.fat}</StyledTableCell>
-                                <StyledTableCell >{row.carbs}</StyledTableCell>
-                                <StyledTableCell >{row.fat}</StyledTableCell>
+                                <StyledTableCell >{row.category}</StyledTableCell>
+                                <StyledTableCell >{row.dateCreate}</StyledTableCell>
+                                <StyledTableCell >{row.price}</StyledTableCell>
                                 <StyledTableCell >
-                                    <Link to="/editProduct">
+                                    <div className={classes.imgCover}>
+                                        <img className={classes.cusImg} src={row.img} alt="" />
+                                    </div>
+                                </StyledTableCell>
+                                <StyledTableCell >
+                                    <Link to="editProduct">
                                         <Button className={classes.customTaga}> Edit</Button>
                                     </Link>
                                     <Link to="/listProduct">

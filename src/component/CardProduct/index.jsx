@@ -6,14 +6,15 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import useStyles from "./useStyles";
 import hover from '../../event/hover'
-export default function CardProduct() {
+export default function CardProduct({product}) {
     var classes = useStyles();
     const [hoverRef, isHovered] = hover();
+    const {name,price,img} = product;
     return (
         <div className={classes.card} ref={hoverRef}>
             <div className={classes.imgProductBox} >
                 <a href="/#">
-                    <img className={classes.imgProduct} src="//cdn.shopify.com/s/files/1/0248/5823/0872/products/9_2fb7cc1d-cf28-45a9-bc65-8629d22593b7_large.jpg?v=1571546896" alt="" />
+                    <img className={classes.imgProduct} src={img} alt="" />
                 </a>
                 <div className={classes.buttomGroup}>
                     <a href="/#">
@@ -39,8 +40,8 @@ export default function CardProduct() {
 
                     <Grid container>
                         <Grid item xs={9}>
-                            <h6 className={classes.titleProduct} > <a className={classes.cusTaga} href="/#">Quickiin Mens shoes</a> </h6>
-                            <p className={classes.price}>$999 </p>
+                            <h6 className={classes.titleProduct} > <a className={classes.cusTaga} href="/#">{name}</a> </h6>
+                            <p className={classes.price}>{price} </p>
                         </Grid>
                         <Grid item xs={3}>
                             <div className={classes.addToCartBox}>

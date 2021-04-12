@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react';
 import Home from './page/Home';
 import Header from './component/Header';
 import ListProduct from './page/ListProduct';
@@ -14,9 +15,9 @@ function App() {
         <Header/>
         <Switch>
           <Route path="/" exact component={Home}/>    
-          <Route path="/listProduct" exact component={ListProduct}/>
-          <Route path="/manageProduct" exact component={ManageProduct}/>  
-          <Route path="/editProduct" exact component={DetailProduct}/>         
+          <Route path="/listProduct"  component={ListProduct}/>
+          <Route path="/manageProduct"  component={ManageProduct}/>  
+          <Route path={["/editProduct","/addProduct"]}  component={DetailProduct}/>         
         </Switch>
       </div>
     </Router>

@@ -1,4 +1,4 @@
-import {SET_PRODUCT} from "../actionType/index"
+import {ACTION} from "../actionType/index"
 
 let initialState = {
     productList: [],
@@ -6,7 +6,9 @@ let initialState = {
 
   const reducer = (state = initialState, { type, payload }) => {
     switch (type) {
-      case SET_PRODUCT:
+      case ACTION.SET_PRODUCT:
+        return { ...state, productList: payload };
+      case ACTION.CREATE_PRODUCT:
         return { ...state, productList: payload };
       default:
         return state;
