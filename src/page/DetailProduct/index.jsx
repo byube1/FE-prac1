@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -11,8 +11,8 @@ import Button from '@material-ui/core/Button';
 import useForm from './useForm.js'
 import { makeStyles } from '@material-ui/core/styles';
 import { createProduct } from "../../redux/action/productAction";
-import axios from "axios";
-
+import { useDispatch } from "react-redux";
+import { NotificationManager} from "react-notifications"
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -45,69 +45,51 @@ const InitialFieldValue = {
     price: "",
     category: "",
     dateCreate: new Date().toLocaleString(),
-    img: ""
+    img: "",
 }
 
-export default function DetailProduct() {
+export default function DetailProduct({location}) {
     const classes = useStyles();
-
+    const dispath = useDispatch();
    
-
+    const [initField,setInitFiled] = useState(location.state?{...location.state}:InitialFieldValue);
+    console.log(initField);
     const validate = (fieldValues = values) => {
         let tmp = {};
-        if('name' in fieldValues)      
-        tmp.name = fieldValues.name ? "" : "This field is required";
-        if('price' in fieldValues)   
-        tmp.price = fieldValues.price ? "" : "This field is required";
-        if('category' in fieldValues)   
-        tmp.category = fieldValues.category ? "" : "This field is required";
-        if('img' in fieldValues)   
-        tmp.img = fieldValues.img ? "" : "This field is required";
+        if ('name' in fieldValues)
+            tmp.name = fieldValues.name ? "" : "This field is required";
+        if ('price' in fieldValues)
+            tmp.price = fieldValues.price ? "" : "This field is required";
+        if ('category' in fieldValues)
+            tmp.category = fieldValues.category ? "" : "This field is required";
+        if ('img' in fieldValues)
+            tmp.img = fieldValues.img ? "" : "This field is required";
 
         setErrors({ ...tmp });
-        if(fieldValues == values)
-        return Object.values(tmp).every(x => x == "");
+        if (fieldValues == values)
+            return Object.values(tmp).every(x => x == "");
 
     }
 
-    const { values, setValues, errors, setErrors, handleInputChange } = useForm(InitialFieldValue,validate);
-
+    const { values, setValues, errors, setErrors, handleInputChange } = useForm(initField, validate);
 
     const handleSubmit = e => {
-        e.preventDefault();
-
+        e.preventDefault();       
         if (validate()) {
-
-            values.price = 20;
-
-            axios.post(`https://localhost:44322/api/product`,values).then(res=>{
-                console.log(res.data);
-                console.log(res);
-            }).catch(err=>{console.log(err)})
-
-
-            
-            console.log(values);
-          
-
-            window.alert("OK");
-
+             dispath( createProduct(values));
+             NotificationManager.success('Success message', '',2000)
+             setValues({...initField});                           
         }
         else {
-            window.alert("false");
+             NotificationManager.error('Product creation failed','',2000)
         }
-
-
-
-       
     }
     return (
-        <div className={classes.cover}>
+        <div className={classes.cover}>         
             <Paper className={classes.paper} >
                 <Typography variant="h2" gutterBottom>
                     Manage Product
-      </Typography>
-
+               </Typography>
                 <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
                     <Grid container>
                         <Grid item xs={12}>
@@ -167,9 +149,7 @@ export default function DetailProduct() {
 
                     </Grid>
                     <Button type="submit" color="primary" variant="contained">Save</Button>
-
                 </form>
-
             </Paper>
 
         </div>

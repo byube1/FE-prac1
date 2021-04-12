@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const request = (url, method, data) => {
-    return axios({
-      url,
-      method,
-      data,
-    });
+
+  export const dbData = (url) =>{
+  return{
+    getData: ()=> axios.get(url),
+    createData: (data) => axios.post(url,data)
   };
+}

@@ -6,12 +6,16 @@ import ListProduct from './page/ListProduct';
 import ManageProduct from './page/ManageProduct';
 import DetailProduct from './page/DetailProduct';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {NotificationContainer} from "react-notifications"
+import 'react-notifications/lib/notifications.css';
+
 
 
 function App() {
   return (
     <Router>
       <div className="App">
+      <NotificationContainer/>
         <Header/>
         <Switch>
           <Route path="/" exact component={Home}/>    

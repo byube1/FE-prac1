@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 
-export default function useForm(InitialFieldValue,validate) {
+export default function useForm(initField, validate) {
 
-    const [values,setValues] = useState(InitialFieldValue);
-    const [errors,setErrors] = useState({});
+    const [values, setValues] = useState(initField);
+    const [errors, setErrors] = useState({});
 
     const handleInputChange = e => {
-        const {name,value} = e.target;  
-        const fieldValue = {[name]:value}    
-        setValues({...values,...fieldValue});
+        const { name, value } = e.target;
+        const fieldValue = { [name]: value }
+        setValues({ ...values, ...fieldValue });
         validate(fieldValue);
     }
 
-    return{values,setValues,errors,setErrors,handleInputChange};
+    return { values, setValues, errors, setErrors, handleInputChange };
 }

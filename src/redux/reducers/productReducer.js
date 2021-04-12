@@ -9,7 +9,7 @@ let initialState = {
       case ACTION.SET_PRODUCT:
         return { ...state, productList: payload };
       case ACTION.CREATE_PRODUCT:
-        return { ...state, productList: payload };
+        return { ...state, productList: [...state.productList,payload] };
       default:
         return state;
     }

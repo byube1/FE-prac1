@@ -50,10 +50,12 @@ const useStyles = makeStyles({
 });
 
 export default function CustomizedTables() {
+
     const dispatch = useDispatch();
     React.useEffect(() => {
         dispatch(fetchProduct());
-    });
+    },[]);
+
     const classes = useStyles();
     const rows = useSelector((state => state.productReducer.productList))
 
@@ -99,7 +101,7 @@ export default function CustomizedTables() {
                                     </div>
                                 </StyledTableCell>
                                 <StyledTableCell >
-                                    <Link to="editProduct">
+                                    <Link to={{pathname:"/editProduct",state:row}}>
                                         <Button className={classes.customTaga}> Edit</Button>
                                     </Link>
                                     <Link to="/listProduct">
