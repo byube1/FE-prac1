@@ -10,7 +10,11 @@ let initialState = {
         return { ...state, productList: payload };
       case ACTION.CREATE_PRODUCT:
         return { ...state, productList: [...state.productList,payload] };
-      default:
+      case ACTION.UPDATE_PRODUCT:
+        return { ...state, productList: state.productList.map(pd=>pd.id === payload.id ? payload:pd)}
+      case ACTION.DELETE_PRODUCT:
+        return { ...state, productList: state.productList.filter(pd=>pd.id!=payload)}
+      default:     
         return state;
     }
   };

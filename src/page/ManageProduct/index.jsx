@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { fetchProduct } from "../../redux/action/productAction";
+import AlertsDialog from "../../component/AlertsDialog"
 const StyledTableCell = withStyles((theme) => ({
     head: {
         backgroundColor: theme.palette.common.black,
@@ -46,6 +47,9 @@ const useStyles = makeStyles({
         display: "flex",
         justifyContent: "flex-start",
         margin: "20px 0"
+    },
+    customTaga:{
+        textDecoration:"none",
     }
 });
 
@@ -54,7 +58,7 @@ export default function CustomizedTables() {
     const dispatch = useDispatch();
     React.useEffect(() => {
         dispatch(fetchProduct());
-    },[]);
+    }, []);
 
     const classes = useStyles();
     const rows = useSelector((state => state.productReducer.productList))
@@ -101,12 +105,10 @@ export default function CustomizedTables() {
                                     </div>
                                 </StyledTableCell>
                                 <StyledTableCell >
-                                    <Link to={{pathname:"/editProduct",state:row}}>
-                                        <Button className={classes.customTaga}> Edit</Button>
+                                    <Link to={{ pathname: "/editProduct", state: row }} className={classes.customTaga}>
+                                        <Button className={classes.customTaga} variant="outlined" color="primary"> Edit</Button>
                                     </Link>
-                                    <Link to="/listProduct">
-                                        <Button className={classes.customTaga}> Delete</Button>
-                                    </Link>
+                                    <AlertsDialog idProduct = {row.id} />
                                 </StyledTableCell>
 
                             </StyledTableRow>

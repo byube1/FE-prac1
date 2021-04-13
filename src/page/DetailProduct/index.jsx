@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -10,9 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import useForm from './useForm.js'
 import { makeStyles } from '@material-ui/core/styles';
-import { createProduct } from "../../redux/action/productAction";
+import { createProduct, updateProduct } from "../../redux/action/productAction";
 import { useDispatch } from "react-redux";
-import { NotificationManager} from "react-notifications"
+import { NotificationManager } from "react-notifications"
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -48,12 +48,10 @@ const InitialFieldValue = {
     img: "",
 }
 
-export default function DetailProduct({location}) {
+export default function DetailProduct({ location }) {
     const classes = useStyles();
     const dispath = useDispatch();
-   
-    const [initField,setInitFiled] = useState(location.state?{...location.state}:InitialFieldValue);
-    console.log(initField);
+    const [initField, setInitFiled] = useState(location.state ? { ...location.state } : InitialFieldValue);
     const validate = (fieldValues = values) => {
         let tmp = {};
         if ('name' in fieldValues)
@@ -74,18 +72,25 @@ export default function DetailProduct({location}) {
     const { values, setValues, errors, setErrors, handleInputChange } = useForm(initField, validate);
 
     const handleSubmit = e => {
-        e.preventDefault();       
+        e.preventDefault();
         if (validate()) {
-             dispath( createProduct(values));
-             NotificationManager.success('Success message', '',2000)
-             setValues({...initField});                           
+
+            if (location.state) {                                   
+                dispath(updateProduct(values.id,values));
+                NotificationManager.success('Edit successfully', '', 2000);
+            }
+            else {
+                dispath(createProduct(values));
+                NotificationManager.success('Create successfully', '', 2000);
+                setValues({ ...initField });
+            }
         }
         else {
-             NotificationManager.error('Product creation failed','',2000)
+            NotificationManager.error('Action Failed', '', 2000);
         }
     }
     return (
-        <div className={classes.cover}>         
+        <div className={classes.cover}>
             <Paper className={classes.paper} >
                 <Typography variant="h2" gutterBottom>
                     Manage Product
