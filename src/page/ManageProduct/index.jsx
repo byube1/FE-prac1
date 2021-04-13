@@ -59,25 +59,16 @@ export default function CustomizedTables() {
     React.useEffect(() => {
         dispatch(fetchProduct());
     }, []);
-
     const classes = useStyles();
     const rows = useSelector((state => state.productReducer.productList))
-
-
     return (
-
         <Container>
-
             <div className={classes.addpd}>
                 <Link to="/addProduct">
                     <Button className={classes.customTaga} variant="contained" color="primary"> Add new product</Button>
                 </Link>
 
             </div>
-
-
-
-
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="customized table">
                     <TableHead>
@@ -110,7 +101,6 @@ export default function CustomizedTables() {
                                     </Link>
                                     <AlertsDialog idProduct = {row.id} />
                                 </StyledTableCell>
-
                             </StyledTableRow>
                         ))}
                     </TableBody>
