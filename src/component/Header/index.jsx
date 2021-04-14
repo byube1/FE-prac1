@@ -35,7 +35,9 @@ export default function ButtonAppBar() {
                     </Link>
                     <Link to="/manageProduct">
                         <Button className={classes.customTaga} > Manage Product </Button>
-
+                    </Link>
+                    <Link to="/manageCustomer">
+                        <Button className={classes.customTaga} > Manage Customer </Button>
                     </Link>
                 </Toolbar>
             </AppBar>
