@@ -8,7 +8,8 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { createCustomer } from '../../redux/action/customerAction';
+import { createOrder } from '../../redux/action/shoppingCartAction';
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,24 +38,40 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DetailCustomer({ location }) {
+export default function DetailCustomer() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const cart = useSelector((state => state.shoppingCartReducer.cart));
+    const totalAmount = useSelector((state => state.shoppingCartReducer.totalAmount));
     const currentCustomer = {
-        userName: "", 
-        password: "", 
-        firstName: "", 
-        lastName: "", 
-        email: "", 
-        address: "", 
-        phoneNumber: ""};
+        userName: "",
+        address: "",
+        phoneNumber: ""
+    };
     const [customer, setCustomer] = useState(currentCustomer);
     const changeInputValue = (event) => {
         const { name, value } = event.target
         setCustomer({ ...customer, [name]: value });
+        console.log(customer);
     }
-    const addCustomer = () => {
-        dispatch(createCustomer(customer));
+    const pay = () => {
+        const order = {
+            userName: customer.userName,
+            adress: customer.address,
+            phone: customer.phoneNumber,
+            total: totalAmount,
+            cart: [],
+        }
+        cart.map( (item) => {
+            order.cart.push({
+                idProduct: item.productCart.id,
+                productName: item.productCart.name,
+                amount: item.quantity,
+                price: item.productCart.price,
+            })
+        })
+        console.log(order);
+        createOrder(order);
     }
     return (
         <div className={classes.cover}>
@@ -69,18 +86,6 @@ export default function DetailCustomer({ location }) {
                             <TextField name="userName" onChange={changeInputValue} defaultValue={customer.userName} className={classes.input} required id="standard-required" label="UserName" variant="outlined" />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField name="password" onChange={changeInputValue} defaultValue={customer.password} className={classes.input} required id="standard-required" label="Password" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField name="firstName" onChange={changeInputValue} defaultValue={customer.firstName} className={classes.input} required id="standard-required" label="FirstName" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField name="lastName" onChange={changeInputValue} defaultValue={customer.lastName} className={classes.input} required id="standard-required" label="LastName" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField name="email" onChange={changeInputValue} defaultValue={customer.email} className={classes.input} required id="standard-required" label="Email" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12}>
                             <TextField name="address" onChange={changeInputValue} defaultValue={customer.address} className={classes.input} required id="standard-required" label="Address" variant="outlined" />
                         </Grid>
                         <Grid item xs={12}>
@@ -88,7 +93,7 @@ export default function DetailCustomer({ location }) {
                         </Grid>
                     </Grid>
                     <Link to={{ pathname: "/manageCustomer" }}>
-                        <Button onClick={addCustomer} type="submit" color="primary" variant="contained">Save</Button>
+                        <Button onClick={pay} type="submit" color="primary" variant="contained">Pay</Button>
                     </Link>
                 </form>
 

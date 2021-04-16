@@ -132,7 +132,7 @@ export default function CustomizedTables() {
     return (
         <Container>
             <div className={classes.addpd}>
-                <Link to="#">
+                <Link to={{pathname:"/checkOut"}}>
                     <Button className={classes.customTaga} variant="contained" color="primary"> Checkoout</Button>
                 </Link>
 
@@ -159,16 +159,14 @@ export default function CustomizedTables() {
                                 <StyledTableCell >{row.productCart.price}</StyledTableCell>
                                 <StyledTableCell >
                                     <div className={classes.imgCover}>
-                                        <img className={classes.cusImg} src={row.img} alt="" />
+                                        <img className={classes.cusImg} src={row.productCart.img} alt="" />
                                     </div>
                                 </StyledTableCell>
                                 <StyledTableCell >{row.quantity}</StyledTableCell>
-
                                 <StyledTableCell >
                                     <Button onClick={() => increaseProduct(row.productCart.id)} className={classes.customTaga} variant="outlined" color="primary">+</Button>
                                     <Button onClick={() => decreaseProduct(row.productCart.id)} className={classes.customTaga} variant="outlined" color="primary">-</Button>
                                     <Button onClick={() => removeCart(row.productCart.id)} className={classes.customTaga} variant="outlined" color="primary"> Delete</Button>
-
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}

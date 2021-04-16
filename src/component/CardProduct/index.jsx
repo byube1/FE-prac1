@@ -82,7 +82,6 @@ export default function CardProduct({ product }) {
                         <Grid item xs={9}>
                             <h6 className={classes.titleProduct} > <a className={classes.cusTaga} href="/#">{name}</a> </h6>
                             <p className={classes.price}>{price}</p>
-                            <p className={classes.price}>{id}</p>
                         </Grid>
                         <Grid item xs={3}>
                             <div className={classes.addToCartBox}>

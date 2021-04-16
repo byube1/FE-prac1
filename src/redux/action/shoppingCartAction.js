@@ -1,15 +1,12 @@
-import { ACTION } from "../actionType/index";
+import { dbData } from "../../configs/request";
+const ROOT_URL = "https://localhost:44322/api/order/";
 
 
 
-export const createProduct = (data) => dispath => {
-    data = formatData(data);
+export const createOrder = (data) => {
     dbData(ROOT_URL).createData(data)
         .then(res => {
-            dispath({
-                type: ACTION.CREATE_PRODUCT,
-                payload: res.data
-            })
+            console.log(res.data);
         })
         .catch(err => console.log(err));
 }

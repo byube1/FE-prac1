@@ -12,7 +12,7 @@ import DetailCustomer from './page/DetailCustomer';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import React, { useState, useEffect } from 'react';
-import CardProduct from './component/CardProduct';
+import CheckOut from './page/CheckOut';
 import ShoppingCart from './component/ShoppingCart';
 
 
@@ -28,6 +28,7 @@ function App() {
           <Route path="/manageProduct" exact component={ManageProduct} />
           <Route path="/editProduct" exact component={DetailProduct} />
           <Route path="/shoppingCart" exact component={ShoppingCart} />
+          <Route path="/checkOut" exact component={CheckOut} />
 
           <Route path="/addCustomer" exact component={AddCustomer} />
           <Route path="/manageCustomer" exact component={ManageCustomer} />
