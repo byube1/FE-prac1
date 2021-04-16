@@ -1,51 +1,114 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { fetchProduct } from "../../redux/action/productAction";
+import AlertsDialogProduct from "../../component/AlertsDialogProduct"
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
 
 const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
+  table: {
+    minWidth: 700,
   },
-  media: {
-    height: 140,
+  imgCover: {
+    width: "20%"
   },
+  cusImg: {
+    width: "100%"
+  },
+  addpd: {
+    display: "flex",
+    justifyContent: "flex-start",
+    margin: "20px 0"
+  },
+  customTaga: {
+    textDecoration: "none",
+  }
 });
 
-export default function MediaCard() {
+export default function CustomizedTables() {
+
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(fetchProduct());
+  }, []);
   const classes = useStyles();
+  const rows = useSelector((state => state.productReducer.productList))
+  
+  
 
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
+    <Container>
+      <div className={classes.addpd}>
+        <Link to="/addProduct">
+          <Button className={classes.customTaga} variant="contained" color="primary"> Add new product</Button>
+        </Link>
+
+      </div>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Name</StyledTableCell>
+              <StyledTableCell >Catelogy</StyledTableCell>
+              <StyledTableCell >Date create</StyledTableCell>
+              <StyledTableCell >Price</StyledTableCell>
+              <StyledTableCell >IMG</StyledTableCell>
+              <StyledTableCell >Option</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <StyledTableRow key={row.name}>
+                <StyledTableCell component="th" scope="row">
+                  {row.name}
+                </StyledTableCell>
+                <StyledTableCell >{row.category}</StyledTableCell>
+                <StyledTableCell >{row.dateCreate}</StyledTableCell>
+                <StyledTableCell >{row.price}</StyledTableCell>
+                <StyledTableCell >
+                  <div className={classes.imgCover}>
+                    <img className={classes.cusImg} src={row.img} alt="" />
+                  </div>
+                </StyledTableCell>
+                <StyledTableCell >
+                  <Link to={{ pathname: "/editProduct", state: row }} className={classes.customTaga}>
+                    <Button className={classes.customTaga} variant="outlined" color="primary"> Edit</Button>
+                  </Link>
+                  <AlertsDialogProduct idProduct={row.id} />
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }

@@ -8,9 +8,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-
+import Container from '@material-ui/core/Container';
+import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
-
+import { useDispatch } from "react-redux";
+import { fetchProduct } from "../../redux/action/productAction";
+import AlertsDialogProduct from "../../component/AlertsDialogProduct"
 const StyledTableCell = withStyles((theme) => ({
     head: {
         backgroundColor: theme.palette.common.black,
@@ -29,63 +32,80 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
+    imgCover: {
+        width: "20%"
+    },
+    cusImg: {
+        width: "100%"
+    },
+    addpd: {
+        display: "flex",
+        justifyContent: "flex-start",
+        margin: "20px 0"
+    },
+    customTaga: {
+        textDecoration: "none",
+    }
 });
 
 export default function CustomizedTables() {
+
+    const dispatch = useDispatch();
+    React.useEffect(() => {
+        dispatch(fetchProduct());
+    }, []);
     const classes = useStyles();
-
+    const rows = useSelector((state => state.productReducer.productList))
     return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Name</StyledTableCell>
-                        <StyledTableCell >Catelogy</StyledTableCell>
-                        <StyledTableCell >Date create</StyledTableCell>
-                        <StyledTableCell >Price</StyledTableCell>
-                        <StyledTableCell >IMG</StyledTableCell>
-                        <StyledTableCell >Option</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                                {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell >{row.calories}</StyledTableCell>
-                            <StyledTableCell >{row.fat}</StyledTableCell>
-                            <StyledTableCell >{row.carbs}</StyledTableCell>
-                            <StyledTableCell >{row.fat}</StyledTableCell>
-                            <StyledTableCell >
-                                <Link to="/editProduct">
-                                    <Button className={classes.customTaga}> Edit</Button>
-                                </Link>
-                                <Link to="/listProduct">
-                                    <Button className={classes.customTaga}> Delete</Button>
-                                </Link>
-                            </StyledTableCell>
+        <Container>
+            <div className={classes.addpd}>
+                <Link to="/addProduct">
+                    <Button className={classes.customTaga} variant="contained" color="primary"> Add new product</Button>
+                </Link>
 
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+            </div>
+            <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Name</StyledTableCell>
+                            <StyledTableCell >Catelogy</StyledTableCell>
+                            <StyledTableCell >Date create</StyledTableCell>
+                            <StyledTableCell >Price</StyledTableCell>
+                            <StyledTableCell >IMG</StyledTableCell>
+                            <StyledTableCell >Option</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <StyledTableRow key={row.name}>
+                                <StyledTableCell component="th" scope="row">
+                                    {row.name}
+                                </StyledTableCell>
+                                <StyledTableCell >{row.category}</StyledTableCell>
+                                <StyledTableCell >{row.dateCreate}</StyledTableCell>
+                                <StyledTableCell >{row.price}</StyledTableCell>
+                                <StyledTableCell >
+                                    <div className={classes.imgCover}>
+                                        <img className={classes.cusImg} src={row.img} alt="" />
+                                    </div>
+                                </StyledTableCell>
+                                <StyledTableCell >
+                                    <Link to={{ pathname: "/editProduct", state: row }} className={classes.customTaga}>
+                                        <Button className={classes.customTaga} variant="outlined" color="primary"> Edit</Button>
+                                    </Link>
+                                    <AlertsDialogProduct idProduct={row.id} />
+                                </StyledTableCell>
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Container>
     );
 }

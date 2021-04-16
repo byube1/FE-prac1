@@ -100,7 +100,7 @@ export default function DetailProduct({ location }) {
                         <Grid item xs={12}>
                             <TextField
                                 name="name"
-                                value={values.name}
+                                //value={values.name}
                                 onChange={handleInputChange}
                                 className={classes.input}
                                 required id="standard-required"
@@ -130,7 +130,7 @@ export default function DetailProduct({ location }) {
                             <TextField
                                 className={classes.input}
                                 name="price"
-                                value={values.price}
+                                //value={values.price}
                                 onChange={handleInputChange}
                                 {...(errors.price && { error: true, helperText: errors.price })}
                                 id="standard-number"
